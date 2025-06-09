@@ -72,12 +72,12 @@ export default function ParkingLotInfo() {
               height={646}
             />
           </div>
-          <div className="grid grid-cols-1 gap-12 text-center">
+          <div className="grid grid-cols-1 text-center">
             {/* 剩餘車位 - 主要顯示 */}
             <div className="bg-white/10 rounded-2xl p-16 portrait:p-20 landscape:p-12 border border-white/20">
-              <h2 className="text-start text-12xl md:text-8xl portrait:text-8xl landscape:text-6xl font-semibold text-blue-200 mb-4 portrait:mb-4 landscape:mb-4">剩餘車位</h2>
+              <h2 className="text-start text-12xl md:text-8xl portrait:text-8xl landscape:text-6xl font-semibold text-blue-200 mb-4 portrait:mb-4 landscape:mb-4">專用剩餘車位</h2>
               <div className="relative">
-                <div className={`text-[48rem] md:text-[36rem] portrait:text-[48rem] landscape:text-[36rem] font-bold ${getStatusColor()} transition-all duration-500 leading-none`}>
+                <div className={`text-[24rem] md:text-[24rem] portrait:text-[24rem] landscape:text-[30rem] font-bold ${getStatusColor()} transition-all duration-500 leading-none`}>
                   {isLoading ? (
                     <div className="animate-pulse">--</div>
                   ) : (
