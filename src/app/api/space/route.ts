@@ -20,6 +20,12 @@ export async function GET() {
                 remark: item.remark
             }));
 
+            console.log(`
+                ====================================\n
+                地點: ${newData[0].name || '-'}\n
+                總共 ${newData[0].total} 個車位, 當前 ${newData[0].occupied} 個車位, 剩餘 ${newData[0].available} 個車位.
+            `);
+
             return NextResponse.json({ data: { ...newData[0] } });
         } else {
             return NextResponse.json({ data: null }, { status: 404 });
