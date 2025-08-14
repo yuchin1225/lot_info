@@ -11,8 +11,6 @@ interface ParkingData {
 }
 
 export default function ParkingLotInfo() {
-  const [isLoading, setIsLoading] = useState(false);
-
   // 停車數據
   const [parkingData, setParkingData] = useState<ParkingData>({
     name: '',
@@ -28,7 +26,6 @@ export default function ParkingLotInfo() {
   useEffect(() => {
 
     const fetchData = async () => {
-      setIsLoading(true);
       try {
         const response = await fetch('/api/space');
         const { data } = await response.json();
@@ -37,8 +34,6 @@ export default function ParkingLotInfo() {
         }
       } catch (error: unknown) {
         console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
       }
     }
 
@@ -78,11 +73,7 @@ export default function ParkingLotInfo() {
               <h2 className="text-start text-12xl md:text-8xl portrait:text-8xl landscape:text-6xl font-semibold text-blue-200 mb-4 portrait:mb-4 landscape:mb-4">專用剩餘車位</h2>
               <div className="relative">
                 <div className={`text-[24rem] md:text-[24rem] portrait:text-[24rem] landscape:text-[30rem] font-bold ${getStatusColor()} transition-all duration-500 leading-none`}>
-                  {isLoading ? (
-                    <div className="animate-pulse">--</div>
-                  ) : (
-                    parkingData.available
-                  )}
+                  {parkingData.available}
                 </div>
               </div>
             </div>
