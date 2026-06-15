@@ -7,22 +7,27 @@ export async function GET() {
     try {
         const [queryRows] = await db.execute<RowDataPacket[]>(
             `SELECT name, current, total, rmk as remark FROM lot_info WHERE lotid = ?`,
-            ['P543']
+            ["P543"],
         );
 
         if (queryRows[0]) {
+            const newData = queryRows.map((item) => {
+                const total = Number(item.total) < 0 ? 0 : Number(item.total);
+                const current =
+                    Number(item.current) < 0 ? 0 : Number(item.current);
 
-            const newData = queryRows.map(item => ({
-                name: item.name,
-                available: Number(item.total) - Number(item.current),
-                occupied: Number(item.current),
-                total: Number(item.total),
-                remark: item.remark
-            }));
+                return {
+                    name: item.name,
+                    available: total - current,
+                    occupied: current,
+                    total: total,
+                    remark: item.remark,
+                };
+            });
 
             console.log(`
                 ====================================\n
-                地點: ${newData[0].name || '-'}\n
+                地點: ${newData[0].name || "-"}\n
                 總共 ${newData[0].total} 個車位, 當前 ${newData[0].occupied} 個車位, 剩餘 ${newData[0].available} 個車位.
             `);
 
@@ -41,6 +46,9 @@ export async function GET() {
         }
 
         // fallback：萬一 error 不是 Error，也不是 NextResponse，就直接丟出 generic 錯誤
-        return NextResponse.json({ error: 'Unexpected error' }, { status: 500 });
+        return NextResponse.json(
+            { error: "Unexpected error" },
+            { status: 500 },
+        );
     }
 }
